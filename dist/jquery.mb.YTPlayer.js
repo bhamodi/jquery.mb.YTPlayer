@@ -2,7 +2,7 @@
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
  _ file: jquery.mb.YTPlayer.js                                                                                                                      _
- _ last modified: 23/04/15 20.33                                                                                                                    _
+ _ last modified: 16/05/15 21.29                                                                                                                    _
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
@@ -22,6 +22,7 @@
 var ytp = ytp || {};
 
 function onYouTubeIframeAPIReady() {
+
 	if(ytp.YTAPIReady)
 		return;
 
@@ -31,52 +32,6 @@ function onYouTubeIframeAPIReady() {
 
 (function (jQuery, ytp) {
 
-	/*Browser detection patch*/
-	var nAgt = navigator.userAgent;
-	if (!jQuery.browser) {
-		jQuery.browser = {};
-		jQuery.browser.mozilla = !1;
-		jQuery.browser.webkit = !1;
-		jQuery.browser.opera = !1;
-		jQuery.browser.safari = !1;
-		jQuery.browser.chrome = !1;
-		jQuery.browser.msie = !1;
-		jQuery.browser.ua = nAgt;
-		jQuery.browser.name = navigator.appName;
-		jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
-		jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
-		var nameOffset, verOffset, ix;
-		if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
-			jQuery.browser.msie = !0;
-			jQuery.browser.name = "Microsoft Internet Explorer";
-			var start = nAgt.indexOf("rv:") + 3, end = start + 4;
-			jQuery.browser.fullVersion = nAgt.substring(start, end)
-		} else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.chrome = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.safari = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
-		-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
-		-1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
-		jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
-		isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
-		jQuery.browser.version = jQuery.browser.majorVersion
-	}
-	jQuery.browser.android = /Android/i.test(nAgt);
-	jQuery.browser.blackberry = /BlackBerry|BB|PlayBook/i.test(nAgt);
-	jQuery.browser.ios = /iPhone|iPad|iPod|webOS/i.test(nAgt);
-	jQuery.browser.operaMobile = /Opera Mini/i.test(nAgt);
-	jQuery.browser.kindle = /Kindle|Silk/i.test(nAgt);
-	jQuery.browser.windowsMobile = /IEMobile|Windows Phone/i.test(nAgt);
-	jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || jQuery.browser.ios || jQuery.browser.windowsMobile || jQuery.browser.operaMobile || jQuery.browser.kindle;
-
-	/*******************************************************************************
-	 * jQuery.mb.components: jquery.mb.CSSAnimate
-	 ******************************************************************************/
-	jQuery.fn.CSSAnimate=function(a,g,p,m,h){function r(a){return a.replace(/([A-Z])/g,function(a){return"-"+a.toLowerCase()})}function f(a,f){return"string"!==typeof a||a.match(/^[\-0-9\.]+$/)?""+a+f:a}jQuery.support.CSStransition=function(){var a=(document.body||document.documentElement).style;return void 0!==a.transition||void 0!==a.WebkitTransition||void 0!==a.MozTransition||void 0!==a.MsTransition||void 0!==a.OTransition}();return this.each(function(){var e=this,k=jQuery(this);e.id=e.id||"CSSA_"+ (new Date).getTime();var l=l||{type:"noEvent"};if(e.CSSAIsRunning&&e.eventType==l.type)e.CSSqueue=function(){k.CSSAnimate(a,g,p,m,h)};else if(e.CSSqueue=null,e.eventType=l.type,0!==k.length&&a){e.CSSAIsRunning=!0;"function"==typeof g&&(h=g,g=jQuery.fx.speeds._default);"function"==typeof p&&(h=p,p=0);"function"==typeof m&&(h=m,m="cubic-bezier(0.65,0.03,0.36,0.72)");if("string"==typeof g)for(var b in jQuery.fx.speeds)if(g==b){g=jQuery.fx.speeds[b];break}else g=jQuery.fx.speeds._default;g||(g=jQuery.fx.speeds._default); if(jQuery.support.CSStransition){l={"default":"ease","in":"ease-in",out:"ease-out","in-out":"ease-in-out",snap:"cubic-bezier(0,1,.5,1)",easeOutCubic:"cubic-bezier(.215,.61,.355,1)",easeInOutCubic:"cubic-bezier(.645,.045,.355,1)",easeInCirc:"cubic-bezier(.6,.04,.98,.335)",easeOutCirc:"cubic-bezier(.075,.82,.165,1)",easeInOutCirc:"cubic-bezier(.785,.135,.15,.86)",easeInExpo:"cubic-bezier(.95,.05,.795,.035)",easeOutExpo:"cubic-bezier(.19,1,.22,1)",easeInOutExpo:"cubic-bezier(1,0,0,1)",easeInQuad:"cubic-bezier(.55,.085,.68,.53)", easeOutQuad:"cubic-bezier(.25,.46,.45,.94)",easeInOutQuad:"cubic-bezier(.455,.03,.515,.955)",easeInQuart:"cubic-bezier(.895,.03,.685,.22)",easeOutQuart:"cubic-bezier(.165,.84,.44,1)",easeInOutQuart:"cubic-bezier(.77,0,.175,1)",easeInQuint:"cubic-bezier(.755,.05,.855,.06)",easeOutQuint:"cubic-bezier(.23,1,.32,1)",easeInOutQuint:"cubic-bezier(.86,0,.07,1)",easeInSine:"cubic-bezier(.47,0,.745,.715)",easeOutSine:"cubic-bezier(.39,.575,.565,1)",easeInOutSine:"cubic-bezier(.445,.05,.55,.95)",easeInBack:"cubic-bezier(.6,-.28,.735,.045)", easeOutBack:"cubic-bezier(.175, .885,.32,1.275)",easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};l[m]&&(m=l[m]);var d="",q="transitionEnd";jQuery.browser.webkit?(d="-webkit-",q="webkitTransitionEnd"):jQuery.browser.mozilla?(d="-moz-",q="transitionend"):jQuery.browser.opera?(d="-o-",q="otransitionend"):jQuery.browser.msie&&(d="-ms-",q="msTransitionEnd");l=[];for(c in a){b=c;"transform"===b&&(b=d+"transform",a[b]=a[c],delete a[c]);"filter"===b&&(b=d+"filter",a[b]=a[c],delete a[c]);if("transform-origin"=== b||"origin"===b)b=d+"transform-origin",a[b]=a[c],delete a[c];"x"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" translateX("+f(a[c],"px")+")",delete a[c]);"y"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" translateY("+f(a[c],"px")+")",delete a[c]);"z"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" translateZ("+f(a[c],"px")+")",delete a[c]);"rotate"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" rotate("+f(a[c],"deg")+")",delete a[c]);"rotateX"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" rotateX("+f(a[c],"deg")+ ")",delete a[c]);"rotateY"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" rotateY("+f(a[c],"deg")+")",delete a[c]);"rotateZ"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" rotateZ("+f(a[c],"deg")+")",delete a[c]);"scale"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" scale("+f(a[c],"")+")",delete a[c]);"scaleX"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" scaleX("+f(a[c],"")+")",delete a[c]);"scaleY"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" scaleY("+f(a[c],"")+")",delete a[c]);"scaleZ"===b&&(b=d+"transform", a[b]=a[b]||"",a[b]+=" scaleZ("+f(a[c],"")+")",delete a[c]);"skew"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" skew("+f(a[c],"deg")+")",delete a[c]);"skewX"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" skewX("+f(a[c],"deg")+")",delete a[c]);"skewY"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" skewY("+f(a[c],"deg")+")",delete a[c]);"perspective"===b&&(b=d+"transform",a[b]=a[b]||"",a[b]+=" perspective("+f(a[c],"px")+")",delete a[c]);0>l.indexOf(b)&&l.push(r(b))}var c=l.join(","),s=function(){k.off(q+"."+ e.id);clearTimeout(e.timeout);k.css(d+"transition","");"function"==typeof h&&h(k);e.called=!0;e.CSSAIsRunning=!1;"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null)},n={};jQuery.extend(n,a);n[d+"transition-property"]=c;n[d+"transition-duration"]=g+"ms";n[d+"transition-delay"]=p+"ms";n[d+"transition-style"]="preserve-3d";n[d+"transition-timing-function"]=m;setTimeout(function(){k.one(q+"."+e.id,s);k.css(n)},1);e.timeout=setTimeout(function(){k.called||!h?(k.called=!1,e.CSSAIsRunning=!1):(k.css(d+ "transition",""),h(k),e.CSSAIsRunning=!1,"function"==typeof e.CSSqueue&&(e.CSSqueue(),e.CSSqueue=null))},g+p+100)}else{for(var c in a)"transform"===c&&delete a[c],"filter"===c&&delete a[c],"transform-origin"===c&&delete a[c],"auto"===a[c]&&delete a[c];h&&"string"!==typeof h||(h="linear");k.animate(a,g,h)}}})};
-	/******************************************************************************/
-
-	/*******************************************************************************
-	 * jQuery.mb.components: jquery.mb.simpleSlider
-	 ******************************************************************************/
-	!function(a){a.simpleSlider={defaults:{initialval:0,scale:100,orientation:"h",readonly:!1,callback:!1},init:function(b){return this.each(function(){var c=this,d=a(c);d.addClass("simpleSlider"),c.opt={},a.extend(c.opt,a.simpleSlider.defaults,b),a.extend(c.opt,d.data());var e="h"==c.opt.orientation?"horizontal":"vertical",f=a("<div/>").addClass("level").addClass(e);d.prepend(f),c.level=f,d.css({cursor:"default"}),"auto"==c.opt.scale&&(c.opt.scale=a(c).outerWidth()),d.updateSliderVal(),c.opt.readonly||(d.on("mousedown",function(a){c.canSlide=!0,d.updateSliderVal(a)}),a(document).on("mousemove",function(b){c.canSlide&&(a(document).css({cursor:"default"}),d.updateSliderVal(b),b.preventDefault(),b.stopPropagation())}).on("mouseup",function(){a(document).css({cursor:"auto"}),c.canSlide=!1}))})},updateSliderVal:function(b){function g(a,b){return Math.floor(100*a/b)}var c=this,d=c.get(0);d.opt.initialval="number"==typeof d.opt.initialval?d.opt.initialval:d.opt.initialval(d);var e=a(d).outerWidth(),f=a(d).outerHeight();d.x="object"==typeof b?b.clientX+document.body.scrollLeft-c.offset().left:"number"==typeof b?b*e/d.opt.scale:d.opt.initialval*e/d.opt.scale,d.y="object"==typeof b?b.clientY+document.body.scrollTop-c.offset().top:"number"==typeof b?(d.opt.scale-d.opt.initialval-b)*f/d.opt.scale:d.opt.initialval*f/d.opt.scale,d.y=c.outerHeight()-d.y,d.scaleX=d.x*d.opt.scale/e,d.scaleY=d.y*d.opt.scale/f,d.outOfRangeX=d.scaleX>d.opt.scale?d.scaleX-d.opt.scale:d.scaleX<0?d.scaleX:0,d.outOfRangeY=d.scaleY>d.opt.scale?d.scaleY-d.opt.scale:d.scaleY<0?d.scaleY:0,d.outOfRange="h"==d.opt.orientation?d.outOfRangeX:d.outOfRangeY,d.value="undefined"!=typeof b?"h"==d.opt.orientation?d.x>=c.outerWidth()?d.opt.scale:d.x<=0?0:d.scaleX:d.y>=c.outerHeight()?d.opt.scale:d.y<=0?0:d.scaleY:"h"==d.opt.orientation?d.scaleX:d.scaleY,"h"==d.opt.orientation?d.level.width(g(d.x,e)+"%"):d.level.height(g(d.y,f)),"function"==typeof d.opt.callback&&d.opt.callback(d)}},a.fn.simpleSlider=a.simpleSlider.init,a.fn.updateSliderVal=a.simpleSlider.updateSliderVal}(jQuery);
-	/******************************************************************************/
 
 	var getYTPVideoID = function (url) {
 
@@ -97,39 +52,36 @@ function onYouTubeIframeAPIReady() {
 		return {videoID: videoID, playlistID: playlistID};
 	};
 
-	/*
-	 todo:
-	 setPlaybackRate()
-	 playlist
-	 */
+	/* todo: setPlaybackRate() playlist */
 
 	jQuery.mbYTPlayer = {
 		name   : "jquery.mb.YTPlayer",
-		version: "2.8.5",
+		version: "2.9.2",
 		author : "Matteo Bicocchi",
+		apiKey         : "",
 
 		defaults: {
-			containment     : "body",
-			ratio           : "auto", // "auto", "16/9", "4/3"
-			videoURL        : null,
-			playlistURL     : null,
-			startAt         : 0,
-			stopAt          : 0,
-			autoPlay        : true,
-			vol             : 50, // 1 to 100
-			addRaster       : false,
-			opacity         : 1,
-			quality         : "default", //or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”
-			mute            : false,
-			loop            : true,
-			showControls    : true,
-			showAnnotations : false,
-			showYTLogo      : true,
-			stopMovieOnBlur : true,
-			realfullscreen  : true,
-			gaTrack         : true,
-			optimizeDisplay : true,
-			onReady         : function (player) {}
+			containment    : "body",
+			ratio          : "auto", // "auto", "16/9", "4/3"
+			videoURL       : null,
+			playlistURL    : null,
+			startAt        : 0,
+			stopAt         : 0,
+			autoPlay       : true,
+			vol            : 50, // 1 to 100
+			addRaster      : false,
+			opacity        : 1,
+			quality        : "default", //or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”
+			mute           : false,
+			loop           : true,
+			showControls   : true,
+			showAnnotations: false,
+			showYTLogo     : true,
+			stopMovieOnBlur: true,
+			realfullscreen : true,
+			gaTrack        : true,
+			optimizeDisplay: true,
+			onReady        : function (player) {}
 		},
 
 		/* @fontface icons */
@@ -145,12 +97,12 @@ function onYouTubeIframeAPIReady() {
 
 		locationProtocol: "https:",
 
+		/**
+		 *
+		 * @param options
+		 * @returns {*}
+		 */
 		buildPlayer    : function (options) {
-
-			/*
-			 if (jQuery.browser.mobile)
-			 return this;
-			 */
 
 			return this.each(function () {
 
@@ -177,9 +129,14 @@ function onYouTubeIframeAPIReady() {
 				$YTPlayer.addClass("mb_YTPlayer");
 				var property = $YTPlayer.data("property") && typeof $YTPlayer.data("property") == "string" ? eval('(' + $YTPlayer.data("property") + ')') : $YTPlayer.data("property");
 				if (typeof property != "undefined" && typeof property.vol != "undefined")
-					property.vol = property.vol == 0 ? property.vol = 1 : property.vol;
+					property.vol = property.vol === 0 ? property.vol = 1 : property.vol;
 
 				jQuery.extend(YTPlayer.opt, jQuery.mbYTPlayer.defaults, options, property);
+
+				if(!YTPlayer.hasChanged){
+					YTPlayer.defaultOpt = {};
+					jQuery.extend(YTPlayer.defaultOpt, jQuery.mbYTPlayer.defaults, options, property);
+				}
 
 				YTPlayer.isRetina = (window.retina || window.devicePixelRatio > 1);
 
@@ -214,7 +171,7 @@ function onYouTubeIframeAPIReady() {
 				YTPlayer.opt.showAnnotations = (YTPlayer.opt.showAnnotations) ? '0' : '3';
 				var playerVars = { 'autoplay': 0, 'modestbranding': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'enablejsapi': 1, 'version': 3, 'playerapiid': playerID, 'origin': '*', 'allowfullscreen': true, 'wmode': 'transparent', 'iv_load_policy': YTPlayer.opt.showAnnotations};
 
-				if (document.createElement('video').canPlayType) //&& window.MediaSource  && !YTPlayer.isRetina
+				if (document.createElement('video').canPlayType)
 					jQuery.extend(playerVars, {'html5': 1});
 
 				if (jQuery.browser.msie && jQuery.browser.version < 9)
@@ -223,13 +180,14 @@ function onYouTubeIframeAPIReady() {
 				var playerBox = jQuery("<div/>").attr("id", playerID).addClass("playerBox");
 				var overlay = jQuery("<div/>").css({position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}).addClass("YTPOverlay");
 				YTPlayer.isSelf = YTPlayer.opt.containment == "self";
-				YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery(this) : jQuery(YTPlayer.opt.containment);
+				YTPlayer.defaultOpt.containment = YTPlayer.opt.containment = YTPlayer.opt.containment == "self" ? jQuery(this) : jQuery(YTPlayer.opt.containment);
 				YTPlayer.isBackground = YTPlayer.opt.containment.get(0).tagName.toLowerCase() == "body";
+
 				if (YTPlayer.isBackground && ytp.backgroundIsInited)
 					return;
-				var isPlayer = YTPlayer.opt.containment.is(jQuery(this));
 
-				YTPlayer.canPlayOnMobile = isPlayer && jQuery(this).children().length == 0;
+				var isPlayer = YTPlayer.opt.containment.is(jQuery(this));
+				YTPlayer.canPlayOnMobile = isPlayer && jQuery(this).children().length === 0;
 
 				if (!isPlayer) {
 					$YTPlayer.hide();
@@ -252,7 +210,7 @@ function onYouTubeIframeAPIReady() {
 
 				if (YTPlayer.isBackground) {
 					jQuery("body").css({boxSizing: "border-box"});
-					wrapper.css({position: "fixed", top: 0, left: 0, zIndex: 0, webkitTransform: "translateZ(0)"});
+					wrapper.css({position: "fixed", top: 0, left: 0, zIndex: 0});
 					$YTPlayer.hide();
 				} else if (YTPlayer.opt.containment.css("position") == "static")
 					YTPlayer.opt.containment.css({position: "relative"});
@@ -268,9 +226,11 @@ function onYouTubeIframeAPIReady() {
 
 				if (!YTPlayer.isBackground) {
 					overlay.on("mouseenter", function () {
-						$YTPlayer.find(".mb_YTPBar").addClass("visible");
+						if(YTPlayer.controlBar)
+							YTPlayer.controlBar.addClass("visible");
 					}).on("mouseleave", function () {
-						$YTPlayer.find(".mb_YTPBar").removeClass("visible");
+						if(YTPlayer.controlBar)
+							YTPlayer.controlBar.removeClass("visible");
 					})
 				}
 
@@ -291,10 +251,14 @@ function onYouTubeIframeAPIReady() {
 					if (YTPlayer.isBackground) {
 						ytp.backgroundIsInited = true;
 					}
+
 					YTPlayer.opt.autoPlay = typeof YTPlayer.opt.autoPlay == "undefined" ? (YTPlayer.isBackground ? true : false) : YTPlayer.opt.autoPlay;
 					YTPlayer.opt.vol = YTPlayer.opt.vol ? YTPlayer.opt.vol : 100;
-					jQuery.mbYTPlayer.getDataFromFeed(YTPlayer);
+					jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
+
+
 					jQuery(YTPlayer).on("YTPChanged", function () {
+
 						if (YTPlayer.isInit)
 							return;
 						YTPlayer.isInit = true;
@@ -331,9 +295,11 @@ function onYouTubeIframeAPIReady() {
 							events    : {
 								'onReady': function (event) {
 									YTPlayer.player = event.target;
+
 									if (YTPlayer.isReady)
 										return;
-									YTPlayer.isReady = true;
+
+									YTPlayer.isReady = YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ? false : true;
 									YTPlayer.playerEl = YTPlayer.player.getIframe();
 									$YTPlayer.optimizeDisplay();
 									YTPlayer.videoID = videoID;
@@ -345,24 +311,28 @@ function onYouTubeIframeAPIReady() {
 									jQuery.mbYTPlayer.checkForState(YTPlayer);
 
 									// Trigger state events
-									var YTPevent = jQuery.Event("YTPUnstarted");
-									YTPevent.time = YTPlayer.player.time;
+									var YTPEvent = jQuery.Event("YTPUnstarted");
+									YTPEvent.time = YTPlayer.player.time;
 
 									if (YTPlayer.canTrigger)
-										jQuery(YTPlayer).trigger(YTPevent);
+										jQuery(YTPlayer).trigger(YTPEvent);
 
 								},
 
+								/**
+								 *
+								 * @param event
+								 *
+								 * -1 (unstarted)
+								 * 0 (ended)
+								 * 1 (playing)
+								 * 2 (paused)
+								 * 3 (buffering)
+								 * 5 (video cued).
+								 *
+								 *
+								 */
 								'onStateChange': function (event) {
-
-									/*
-									 -1 (unstarted)
-									 0 (ended)
-									 1 (playing)
-									 2 (paused)
-									 3 (buffering)
-									 5 (video cued).
-									 */
 
 									if (typeof event.target.getPlayerState != "function")
 										return;
@@ -370,7 +340,6 @@ function onYouTubeIframeAPIReady() {
 									if (YTPlayer.state == state)
 										return;
 									YTPlayer.state = state;
-									var controls = jQuery("#controlBar_" + YTPlayer.id);
 									var eventType;
 									switch (state) {
 										case -1: //------------------------------------------------ unstarted
@@ -386,27 +355,28 @@ function onYouTubeIframeAPIReady() {
 										case 1:  //------------------------------------------------ play
 
 											eventType = "YTPStart";
-											controls.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
+
+											if(YTPlayer.controlBar)
+												YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.pause);
 											if (typeof _gaq != "undefined" && eval(YTPlayer.opt.gaTrack))
-												_gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.videoTitle || YTPlayer.videoID.toString())]);
+												_gaq.push(['_trackEvent', 'YTPlayer', 'Play', (YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString())]);
 											if (typeof ga != "undefined" && eval(YTPlayer.opt.gaTrack))
-												ga('send', 'event', 'YTPlayer', 'play', (YTPlayer.videoTitle || YTPlayer.videoID.toString()));
+												ga('send', 'event', 'YTPlayer', 'play', (YTPlayer.hasData ? YTPlayer.videoData.title : YTPlayer.videoID.toString()));
 											break;
 
 										case 2:  //------------------------------------------------ pause
 
 											eventType = "YTPPause";
-											controls.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
+											if(YTPlayer.controlBar)
+												YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
 											break;
 
 										case 3:  //------------------------------------------------ buffer
 
 											YTPlayer.player.setPlaybackQuality(YTPlayer.opt.quality);
 											eventType = "YTPBuffering";
-											controls.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
-											setTimeout(function () {
-												controls.show(1000);
-											}, 2000);
+											if(YTPlayer.controlBar)
+												YTPlayer.controlBar.find(".mb_YTPPlaypause").html(jQuery.mbYTPlayer.controls.play);
 											break;
 
 										case 5:  //------------------------------------------------ cued
@@ -419,12 +389,16 @@ function onYouTubeIframeAPIReady() {
 
 									}
 									// Trigger state events
-									var YTPevent = jQuery.Event(eventType);
-									YTPevent.time = YTPlayer.player.time;
+									var YTPEvent = jQuery.Event(eventType);
+									YTPEvent.time = YTPlayer.player.time;
 									if (YTPlayer.canTrigger)
-										jQuery(YTPlayer).trigger(YTPevent);
+										jQuery(YTPlayer).trigger(YTPEvent);
 								},
 
+								/**
+								 *
+								 * @param e
+								 */
 								'onPlaybackQualityChange': function (e) {
 									var quality = e.target.getPlaybackQuality();
 									var YTPQualityChange = jQuery.Event("YTPQualityChange");
@@ -451,68 +425,152 @@ function onYouTubeIframeAPIReady() {
 			});
 		},
 
-//		todo: This API is deprecated. Find another way to retrieve the video data information.
-		getDataFromFeed: function (YTPlayer) {
-			//Get video info from FEEDS API
+		/**
+		 *
+		 * @param YTPlayer
+		 */
+		getDataFromAPI: function (YTPlayer) {
 
-			if (!(jQuery.browser.msie && jQuery.browser.version <= 9)) {
-				jQuery.getJSON(jQuery.mbYTPlayer.locationProtocol + '//gdata.youtube.com/feeds/api/videos/' + YTPlayer.videoID + '?v=2&alt=jsonc', function (data, status, xhr) {
+			YTPlayer.videoData = jQuery.mbStorage.get("YYTPlayer_data_"+YTPlayer.videoID);
+
+			if(YTPlayer.videoData) {
+
+				setTimeout(function () {
+
+					YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
 					YTPlayer.dataReceived = true;
-					YTPlayer.videoData = data.data;
 					jQuery(YTPlayer).trigger("YTPChanged");
+
 					var YTPData = jQuery.Event("YTPData");
 					YTPData.prop = {};
 					for (var x in YTPlayer.videoData)
 						YTPData.prop[x] = YTPlayer.videoData[x];
 					jQuery(YTPlayer).trigger(YTPData);
-					YTPlayer.videoTitle = YTPlayer.videoData.title;
-					if (YTPlayer.opt.ratio == "auto")
-						if (YTPlayer.videoData.aspectRatio && YTPlayer.videoData.aspectRatio === "widescreen")
-							YTPlayer.opt.ratio = "16/9";
-						else
-							YTPlayer.opt.ratio = "4/3";
-					if (!YTPlayer.hasData) {
-						YTPlayer.hasData = true;
-						if (YTPlayer.isPlayer) {
-							var bgndURL = YTPlayer.videoData.thumbnail.hqDefault;
-							YTPlayer.opt.containment.css({background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center", backgroundSize: "cover"});
-						}
+
+				},500);
+
+				YTPlayer.hasData = true;
+
+
+			} else if (jQuery.mbYTPlayer.apiKey) {
+				// Get video info from API3 (needs api key)
+				// snippet,player,contentDetails,statistics,status
+				jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?id="+YTPlayer.videoID+"&key="+jQuery.mbYTPlayer.apiKey+"&part=snippet", function(data){
+
+					YTPlayer.dataReceived = true;
+					jQuery(YTPlayer).trigger("YTPChanged");
+
+					function parseYTPlayer_data(data){
+						YTPlayer.videoData = {};
+
+						YTPlayer.videoData.id = YTPlayer.videoID;
+						YTPlayer.videoData.channelTitle = data.channelTitle;
+						YTPlayer.videoData.title = data.title;
+						YTPlayer.videoData.description = data.description.length < 400 ? data.description : data.description.substring(0,400) + " ...";
+						YTPlayer.videoData.aspectratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
+
+						YTPlayer.opt.ratio = YTPlayer.videoData.aspectratio;
+
+						YTPlayer.videoData.thumb_max = data.thumbnails.maxres ? data.thumbnails.maxres.url : null;
+						YTPlayer.videoData.thumb_high = data.thumbnails.high ? data.thumbnails.high.url : null;
+						YTPlayer.videoData.thumb_medium = data.thumbnails.medium ? data.thumbnails.medium.url : null;
+
+						jQuery.mbStorage.set("YYTPlayer_data_"+YTPlayer.videoID, YTPlayer.videoData);
+
 					}
+
+					parseYTPlayer_data(data.items[0].snippet);
+
+					YTPlayer.hasData = true;
+
+					var YTPData = jQuery.Event("YTPData");
+					YTPData.prop = {};
+					for (var x in YTPlayer.videoData)
+						YTPData.prop[x] = YTPlayer.videoData[x];
+					jQuery(YTPlayer).trigger(YTPData);
+
 				});
-				setTimeout(function () {
-					if (!YTPlayer.dataReceived && !YTPlayer.hasData) {
-						YTPlayer.hasData = true;
-						jQuery(YTPlayer).trigger("YTPChanged");
-					}
-				}, 1500)
 
 			} else {
-				YTPlayer.opt.ratio == "auto" ? YTPlayer.opt.ratio = "16/9" : YTPlayer.opt.ratio;
+
+				setTimeout(function(){
+					jQuery(YTPlayer).trigger("YTPChanged");
+				},50);
+
+				if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+					var bgndURL = "https://i.ytimg.com/vi/"+YTPlayer.videoID+"/hqdefault.jpg";
+					YTPlayer.opt.containment.css({background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center", backgroundSize: "cover"});
+					YTPlayer.opt.backgroundUrl = bgndURL;
+				}
+
+				YTPlayer.videoData = null;
+				YTPlayer.opt.ratio = YTPlayer.opt.ratio == "auto" ? "16/9" : YTPlayer.opt.ratio;
+
+			}
+
+			jQuery(YTPlayer).off("YTPData.YTPlayer").on("YTPData.YTPlayer", function(){
+
 				if (!YTPlayer.hasData) {
 					YTPlayer.hasData = true;
-					setTimeout(function () {
-						jQuery(YTPlayer).trigger("YTPChanged");
-					}, 100)
+
+					if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+						var bgndURL = YTPlayer.videoData.thumb_max || YTPlayer.videoData.thumb_high || YTPlayer.videoData.thumb_medium;
+						YTPlayer.opt.containment.css({background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center", backgroundSize: "cover"});
+						YTPlayer.opt.backgroundUrl = bgndURL;
+					}
 				}
+
+			});
+
+			if (YTPlayer.isPlayer && !YTPlayer.opt.autoPlay) {
+				YTPlayer.loading = jQuery("<div/>").addClass("loading").html("Loading").hide();
+				jQuery(YTPlayer).append(YTPlayer.loading);
+				YTPlayer.loading.fadeIn();
 			}
 		},
 
+		/**
+		 *
+		 */
+		removeStoredData: function(){
+			jQuery.mbStorage.remove();
+		},
+
+		/**
+		 *
+		 * @returns {*|YTPlayer.videoData}
+		 */
 		getVideoData: function () {
 			var YTPlayer = this.get(0);
 			return YTPlayer.videoData;
 		},
 
+		/**
+		 *
+		 * @returns {*|YTPlayer.videoID|boolean}
+		 */
 		getVideoID: function () {
 			var YTPlayer = this.get(0);
 			return YTPlayer.videoID || false;
 		},
 
+		/**
+		 *
+		 * @param quality
+		 */
 		setVideoQuality: function (quality) {
 			var YTPlayer = this.get(0);
+
 			if (!jQuery.browser.chrome)
 				YTPlayer.player.setPlaybackQuality(quality);
 		},
 
+		/**
+		 * @param videos
+		 * @param shuffle
+		 * @param callback
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		playlist: function (videos, shuffle, callback) {
 			var $YTPlayer = this;
 			var YTPlayer = $YTPlayer.get(0);
@@ -540,6 +598,10 @@ function onYouTubeIframeAPIReady() {
 			return $YTPlayer;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		playNext: function () {
 			var YTPlayer = this.get(0);
 			YTPlayer.videoCounter++;
@@ -547,8 +609,13 @@ function onYouTubeIframeAPIReady() {
 				YTPlayer.videoCounter = 0;
 
 			jQuery(YTPlayer).changeMovie(YTPlayer.videos[YTPlayer.videoCounter]);
+			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		playPrev: function () {
 			var YTPlayer = this.get(0);
 			YTPlayer.videoCounter--;
@@ -556,30 +623,43 @@ function onYouTubeIframeAPIReady() {
 				YTPlayer.videoCounter = YTPlayer.videoLength - 1;
 
 			jQuery(YTPlayer).changeMovie(YTPlayer.videos[YTPlayer.videoCounter]);
+			return this;
 		},
 
+		/**
+		 *
+		 * @param opt
+		 */
 		changeMovie: function (opt) {
-
 			var YTPlayer = this.get(0);
+
 			YTPlayer.opt.startAt = 0;
 			YTPlayer.opt.stopAt = 0;
 			YTPlayer.opt.mute = true;
 
+			YTPlayer.hasData = false;
+			YTPlayer.hasChanged = true;
+
 			if (opt)
-				jQuery.extend(YTPlayer.opt, opt);
+				jQuery.extend(YTPlayer.opt, YTPlayer.defaultOpt, opt);
 
 			YTPlayer.videoID = getYTPVideoID(YTPlayer.opt.videoURL).videoID;
 
 			jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 0}, 200, function(){
 
 				jQuery(YTPlayer).YTPGetPlayer().cueVideoByUrl(encodeURI(jQuery.mbYTPlayer.locationProtocol + "//www.youtube.com/v/" + YTPlayer.videoID), 1, YTPlayer.opt.quality);
-				jQuery.mbYTPlayer.getDataFromFeed(YTPlayer);
 				jQuery.mbYTPlayer.checkForState(YTPlayer);
 				jQuery(YTPlayer).optimizeDisplay();
 
+				jQuery.mbYTPlayer.getDataFromAPI(YTPlayer);
+				return this;
 			});
 		},
 
+		/**
+		 *
+		 * @returns {player}
+		 */
 		getPlayer: function () {
 			return jQuery(this).get(0).player;
 		},
@@ -596,8 +676,14 @@ function onYouTubeIframeAPIReady() {
 
 			clearInterval(YTPlayer.checkForStartAt);
 			clearInterval(YTPlayer.getState);
+			return this;
 		},
 
+		/**
+		 *
+		 * @param real
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		fullscreen: function (real) {
 			var YTPlayer = this.get(0);
 			if (typeof real == "undefined")
@@ -702,8 +788,13 @@ function onYouTubeIframeAPIReady() {
 					RunPrefixMethod(document, "CancelFullScreen");
 				}
 			}
+			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		toggleLoops: function () {
 			var YTPlayer = this.get(0);
 			var data = YTPlayer.opt;
@@ -717,22 +808,35 @@ function onYouTubeIframeAPIReady() {
 				}
 				data.loop = 1;
 			}
+			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		play: function () {
 			var YTPlayer = this.get(0);
-			if (typeof YTPlayer.player === "undefined")
+
+			if (!YTPlayer.isReady)
 				return;
+
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
 			var playBtn = controls.find(".mb_YTPPlaypause");
 			playBtn.html(jQuery.mbYTPlayer.controls.pause);
+
 			YTPlayer.player.playVideo();
 			YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 2000);
-			jQuery(YTPlayer).on("YTPStart", function () {
-				jQuery(YTPlayer).css("background-image", "none");
-			})
+			jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 1}, 1000);
+			jQuery(YTPlayer).css("background-image", "none");
+			return this;
 		},
 
+		/**
+		 *
+		 * @param callback
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		togglePlay : function(callback){
 			var YTPlayer = this.get(0);
 
@@ -744,29 +848,51 @@ function onYouTubeIframeAPIReady() {
 			if(typeof callback == "function"){
 				callback(YTPlayer.state);
 			}
+			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		stop: function () {
 			var YTPlayer = this.get(0);
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
 			var playBtn = controls.find(".mb_YTPPlaypause");
 			playBtn.html(jQuery.mbYTPlayer.controls.play);
 			YTPlayer.player.stopVideo();
+			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		pause: function () {
 			var YTPlayer = this.get(0);
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
 			var playBtn = controls.find(".mb_YTPPlaypause");
 			playBtn.html(jQuery.mbYTPlayer.controls.play);
 			YTPlayer.player.pauseVideo();
+			return this;
 		},
 
+		/**
+		 *
+		 * @param val
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		seekTo: function (val) {
 			var YTPlayer = this.get(0);
 			YTPlayer.player.seekTo(val, true);
+			return this;
 		},
 
+		/**
+		 *
+		 * @param val
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		setVolume: function (val) {
 			var YTPlayer = this.get(0);
 			if (!val && !YTPlayer.opt.vol && YTPlayer.player.getVolume() == 0)
@@ -785,8 +911,13 @@ function onYouTubeIframeAPIReady() {
 				if (YTPlayer.volumeBar && YTPlayer.volumeBar.length)
 					YTPlayer.volumeBar.updateSliderVal(val)
 			}
+			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		mute: function () {
 			var YTPlayer = this.get(0);
 
@@ -798,8 +929,10 @@ function onYouTubeIframeAPIReady() {
 
 			YTPlayer.player.setVolume(0);
 
-			if (YTPlayer.volumeBar && YTPlayer.volumeBar.length)
+
+			if (YTPlayer.volumeBar && YTPlayer.volumeBar.length && YTPlayer.volumeBar.width() > 10){
 				YTPlayer.volumeBar.updateSliderVal(0);
+			}
 
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
 			var muteBtn = controls.find(".mb_YTPMuteUnmute");
@@ -809,13 +942,18 @@ function onYouTubeIframeAPIReady() {
 			if (YTPlayer.volumeBar && YTPlayer.volumeBar.length)
 				YTPlayer.volumeBar.addClass("muted");
 
-			var YTPevent = jQuery.Event("YTPMuted");
-			YTPevent.time = YTPlayer.player.time;
+			var YTPEvent = jQuery.Event("YTPMuted");
+			YTPEvent.time = YTPlayer.player.time;
 			if (YTPlayer.canTrigger)
-				jQuery(YTPlayer).trigger(YTPevent);
+				jQuery(YTPlayer).trigger(YTPEvent);
 
+			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		unmute: function () {
 			var YTPlayer = this.get(0);
 
@@ -838,12 +976,20 @@ function onYouTubeIframeAPIReady() {
 			if (YTPlayer.volumeBar && YTPlayer.volumeBar.length)
 				YTPlayer.volumeBar.removeClass("muted");
 
-			var YTPevent = jQuery.Event("YTPUnmuted");
-			YTPevent.time = YTPlayer.player.time;
+			var YTPEvent = jQuery.Event("YTPUnmuted");
+			YTPEvent.time = YTPlayer.player.time;
 			if (YTPlayer.canTrigger)
-				jQuery(YTPlayer).trigger(YTPevent);
+				jQuery(YTPlayer).trigger(YTPEvent);
+
+			return this;
 		},
 
+		/**
+		 *
+		 * @param filter
+		 * @param value
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		applyFilter: function (filter, value) {
 			var YTPlayer = this.get(0);
 			YTPlayer.filters[filter].value = value;
@@ -854,6 +1000,11 @@ function onYouTubeIframeAPIReady() {
 			return this;
 		},
 
+		/**
+		 *
+		 * @param filters
+		 * @returns {jQuery.mbYTPlayer}
+		 */
 		applyFilters: function (filters) {
 			var YTPlayer = this.get(0);
 
@@ -868,91 +1019,124 @@ function onYouTubeIframeAPIReady() {
 			return this;
 		},
 
-
+		/**
+		 *
+		 * @param filter
+		 * @param value
+		 * @returns {*}
+		 */
 		toggleFilter: function (filter, value) {
-			var YTPlayer = this.get(0);
-			if(!YTPlayer.filters[filter].value)
-				YTPlayer.filters[filter].value = value;
-			else
-				YTPlayer.filters[filter].value = 0;
 
-			if(YTPlayer.filtersEnabled)
-				this.YTPEnableFilters();
+			return this.each(function(){
+				var YTPlayer = this;
+				if(!YTPlayer.filters[filter].value)
+					YTPlayer.filters[filter].value = value;
+				else
+					YTPlayer.filters[filter].value = 0;
 
+				if(YTPlayer.filtersEnabled)
+					jQuery(this).YTPEnableFilters();
+			})
 			return this;
 		},
 
-		disableFilters: function(){
-			var YTPlayer = this.get(0);
-			var iframe = jQuery(YTPlayer.playerEl);
-
-			iframe.css("-webkit-filter", "");
-			iframe.css("filter", "");
-
-			YTPlayer.filtersEnabled = false;
-
-			return this;
-		},
-
-		enableFilters: function(){
-
-			var YTPlayer = this.get(0);
-			var iframe = jQuery(YTPlayer.playerEl);
-
-			var filterStyle = "";
-			for (var key in YTPlayer.filters) {
-				if (YTPlayer.filters[key].value)
-					filterStyle += key.replace("_", "-") + "(" + YTPlayer.filters[key].value + YTPlayer.filters[key].unit + ") ";
-			}
-			iframe.css("-webkit-filter", filterStyle);
-			iframe.css("filter", filterStyle);
-
-			YTPlayer.filtersEnabled = true;
-
-			return this;
-		},
-
+		/**
+		 *
+		 * @param callback
+		 * @returns {*}
+		 */
 		toggleFilters: function(callback){
-			var YTPlayer = this.get(0);
 
-			if(YTPlayer.filtersEnabled) {
-				jQuery(YTPlayer).trigger("YTPDisableFilters");
-				jQuery(YTPlayer).YTPDisableFilters();
-			} else {
-				jQuery(YTPlayer).YTPEnableFilters();
-				jQuery(YTPlayer).trigger("YTPEnableFilters");
-			}
+			return this.each(function(){
+				var YTPlayer = this;
 
-			if(typeof callback == "function")
-				callback(YTPlayer.filtersEnabled);
-
-			return this;
-
-		},
-
-		removeFilter: function (filter, callback) {
-
-			if (typeof filter == "function"){
-				callback = filter;
-				filter = null;
-			}
-
-			var YTPlayer = this.get(0);
-			if (!filter)
-				for (var key in YTPlayer.filters) {
-					this.YTPApplyFilter(key, 0);
-					if(typeof callback == "function")
-						callback(key);
-				} else{
-				this.YTPApplyFilter(filter, 0);
+				if(YTPlayer.filtersEnabled) {
+					jQuery(YTPlayer).trigger("YTPDisableFilters");
+					jQuery(YTPlayer).YTPDisableFilters();
+				} else {
+					jQuery(YTPlayer).YTPEnableFilters();
+					jQuery(YTPlayer).trigger("YTPEnableFilters");
+				}
 
 				if(typeof callback == "function")
-					callback(filter);
-			}
+					callback(YTPlayer.filtersEnabled);
+			})
+		},
 
+		/**
+		 *
+		 * @returns {*}
+		 */
+		disableFilters: function(){
+
+			return this.each(function(){
+				var YTPlayer = this;
+				var iframe = jQuery(YTPlayer.playerEl);
+
+				iframe.css("-webkit-filter", "");
+				iframe.css("filter", "");
+
+				YTPlayer.filtersEnabled = false;
+			})
+		},
+
+		/**
+		 *
+		 * @returns {*}
+		 */
+		enableFilters: function(){
+
+			return this.each(function(){
+				var YTPlayer = this;
+				var iframe = jQuery(YTPlayer.playerEl);
+
+				var filterStyle = "";
+				for (var key in YTPlayer.filters) {
+					if (YTPlayer.filters[key].value)
+						filterStyle += key.replace("_", "-") + "(" + YTPlayer.filters[key].value + YTPlayer.filters[key].unit + ") ";
+				}
+				iframe.css("-webkit-filter", filterStyle);
+				iframe.css("filter", filterStyle);
+
+				YTPlayer.filtersEnabled = true;
+			})
 			return this;
 		},
 
+		/**
+		 *
+		 * @param filter
+		 * @param callback
+		 * @returns {*}
+		 */
+		removeFilter: function (filter, callback) {
+
+			return this.each(function(){
+				if (typeof filter == "function"){
+					callback = filter;
+					filter = null;
+				}
+
+				var YTPlayer = this;
+				if (!filter)
+					for (var key in YTPlayer.filters) {
+						jQuery(this).YTPApplyFilter(key, 0);
+						if(typeof callback == "function")
+							callback(key);
+					} else{
+					jQuery(this).YTPApplyFilter(filter, 0);
+
+					if(typeof callback == "function")
+						callback(filter);
+				}
+			});
+			return this;
+		},
+
+		/**
+		 *
+		 * @returns {{totalTime: number, currentTime: number}}
+		 */
 		manageProgress: function () {
 			var YTPlayer = this.get(0);
 			var controls = jQuery("#controlBar_" + YTPlayer.id);
@@ -970,6 +1154,10 @@ function onYouTubeIframeAPIReady() {
 			return {totalTime: totalTime, currentTime: currentTime};
 		},
 
+		/**
+		 *
+		 * @param YTPlayer
+		 */
 		buildControls: function (YTPlayer) {
 
 			var data = YTPlayer.opt;
@@ -979,8 +1167,7 @@ function onYouTubeIframeAPIReady() {
 			if (jQuery("#controlBar_" + YTPlayer.id).length)
 				return;
 
-			var controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTPBar").css({whiteSpace: "noWrap", position: YTPlayer.isBackground ? "fixed" : "absolute", zIndex: YTPlayer.isBackground ? 10000 : 1000}).hide();
-			YTPlayer.controlBar = controlBar;
+			YTPlayer.controlBar = jQuery("<span/>").attr("id", "controlBar_" + YTPlayer.id).addClass("mb_YTPBar").css({whiteSpace: "noWrap", position: YTPlayer.isBackground ? "fixed" : "absolute", zIndex: YTPlayer.isBackground ? 10000 : 1000}).hide();
 
 			var buttonBar = jQuery("<div/>").addClass("buttonBar");
 
@@ -1019,11 +1206,11 @@ function onYouTubeIframeAPIReady() {
 			var progressBar = jQuery("<div/>").addClass("mb_YTPProgress").css("position", "absolute").click(function (e) {
 				timeBar.css({width: (e.clientX - timeBar.offset().left)});
 				YTPlayer.timeW = e.clientX - timeBar.offset().left;
-				controlBar.find(".mb_YTPLoaded").css({width: 0});
+				YTPlayer.controlBar.find(".mb_YTPLoaded").css({width: 0});
 				var totalTime = Math.floor(YTPlayer.player.getDuration());
 				YTPlayer.goto = (timeBar.outerWidth() * totalTime) / progressBar.outerWidth();
 				YTPlayer.player.seekTo(parseFloat(YTPlayer.goto), true);
-				controlBar.find(".mb_YTPLoaded").css({width: 0});
+				YTPlayer.controlBar.find(".mb_YTPLoaded").css({width: 0});
 			});
 
 			var loadedBar = jQuery("<div/>").addClass("mb_YTPLoaded").css("position", "absolute");
@@ -1040,13 +1227,13 @@ function onYouTubeIframeAPIReady() {
 			if (YTPlayer.isBackground || (eval(YTPlayer.opt.realfullscreen) && !YTPlayer.isBackground))
 				buttonBar.append(onlyVideo);
 
-			controlBar.append(buttonBar).append(progressBar);
+			YTPlayer.controlBar.append(buttonBar).append(progressBar);
 
 			if (!YTPlayer.isBackground) {
-				controlBar.addClass("inlinePlayer");
-				YTPlayer.wrapper.before(controlBar);
+				YTPlayer.controlBar.addClass("inlinePlayer");
+				YTPlayer.wrapper.before(YTPlayer.controlBar);
 			} else {
-				jQuery("body").after(controlBar);
+				jQuery("body").after(YTPlayer.controlBar);
 			}
 
 			volumeBar.simpleSlider({
@@ -1066,9 +1253,12 @@ function onYouTubeIframeAPIReady() {
 						YTPlayer.opt.vol = el.value;
 				}
 			});
-
 		},
 
+		/**
+		 *
+		 *
+		 * */
 		checkForState: function (YTPlayer) {
 
 			var interval = YTPlayer.opt.showControls ? 100 : 1000;
@@ -1089,16 +1279,15 @@ function onYouTubeIframeAPIReady() {
 
 				var prog = jQuery(YTPlayer).YTPManageProgress();
 				var $YTPlayer = jQuery(YTPlayer);
-				var controlBar = jQuery("#controlBar_" + YTPlayer.id);
 				var data = YTPlayer.opt;
-				var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
+				var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 0;
 				var stopAt = YTPlayer.opt.stopAt > YTPlayer.opt.startAt ? YTPlayer.opt.stopAt : 0;
 				stopAt = stopAt < YTPlayer.player.getDuration() ? stopAt : 0;
 
 				if (YTPlayer.player.time != prog.currentTime) {
-					var YTPevent = jQuery.Event("YTPTime");
-					YTPevent.time = YTPlayer.player.time;
-					jQuery(YTPlayer).trigger(YTPevent);
+					var YTPEvent = jQuery.Event("YTPTime");
+					YTPEvent.time = YTPlayer.player.time;
+					jQuery(YTPlayer).trigger(YTPEvent);
 				}
 
 				YTPlayer.player.time = prog.currentTime;
@@ -1109,9 +1298,9 @@ function onYouTubeIframeAPIReady() {
 
 				if (YTPlayer.opt.showControls)
 					if (prog.totalTime) {
-						controlBar.find(".mb_YTPTime").html(jQuery.mbYTPlayer.formatTime(prog.currentTime) + " / " + jQuery.mbYTPlayer.formatTime(prog.totalTime));
+						YTPlayer.controlBar.find(".mb_YTPTime").html(jQuery.mbYTPlayer.formatTime(prog.currentTime) + " / " + jQuery.mbYTPlayer.formatTime(prog.totalTime));
 					} else {
-						controlBar.find(".mb_YTPTime").html("-- : -- / -- : --");
+						YTPlayer.controlBar.find(".mb_YTPTime").html("-- : -- / -- : --");
 					}
 
 				if (eval(YTPlayer.opt.stopMovieOnBlur))
@@ -1137,7 +1326,7 @@ function onYouTubeIframeAPIReady() {
 
 					if (!YTPlayer.isMute && YTPlayer.volumeBar)
 						YTPlayer.volumeBar.updateSliderVal(YTPlayer.opt.vol);
-				};				;
+				};
 
 
 				if (YTPlayer.player.getPlayerState() == 1 && (parseFloat(YTPlayer.player.getDuration() - 3) < YTPlayer.player.getCurrentTime()
@@ -1165,10 +1354,11 @@ function onYouTubeIframeAPIReady() {
 							YTPEnd.time = YTPlayer.player.time;
 							jQuery(YTPlayer).trigger(YTPEnd);
 							YTPlayer.player.seekTo(startAt, true);
+
 							if (!YTPlayer.isBackground) {
-								var bgndURL = YTPlayer.videoData.thumbnail.hqDefault;
-								jQuery(YTPlayer).css({background: "rgba(0,0,0,0.5) url(" + bgndURL + ") center center", backgroundSize: "cover"});
+								YTPlayer.opt.containment.css({background: "rgba(0,0,0,0.5) url(" + YTPlayer.opt.backgroundUrl + ") center center", backgroundSize: "cover"});
 							}
+
 						});
 
 					} else
@@ -1177,6 +1367,9 @@ function onYouTubeIframeAPIReady() {
 			}, interval);
 		},
 
+		/**
+		 *
+		 * */
 		checkForStart: function(YTPlayer){
 
 			var $YTPlayer = jQuery(YTPlayer);
@@ -1194,13 +1387,17 @@ function onYouTubeIframeAPIReady() {
 			jQuery(YTPlayer).muteYTPVolume();
 
 			jQuery("#controlBar_" + YTPlayer.id).remove();
+
 			if (YTPlayer.opt.showControls)
 				jQuery.mbYTPlayer.buildControls(YTPlayer);
 
 			if (YTPlayer.opt.addRaster) {
+
 				var classN = YTPlayer.opt.addRaster == "dot" ? "raster-dot" : "raster";
 				YTPlayer.overlay.addClass(YTPlayer.isRetina ? classN + " retina" : classN);
+
 			} else {
+
 				YTPlayer.overlay.removeClass(function (index, classNames) {
 					// change the list into an array
 					var current_classes = classNames.split(" "),
@@ -1227,12 +1424,18 @@ function onYouTubeIframeAPIReady() {
 
 				var startAt = YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1;
 				var canPlayVideo = (YTPlayer.player.getVideoLoadedFraction() > startAt / YTPlayer.player.getDuration());
+
 				if (YTPlayer.player.getDuration() > 0 && YTPlayer.player.getCurrentTime() >= startAt && canPlayVideo) {
 
 					clearInterval(YTPlayer.checkForStartAt);
 
+					YTPlayer.isReady = true;
+
 					if (typeof YTPlayer.opt.onReady == "function")
 						YTPlayer.opt.onReady(YTPlayer);
+
+					var YTPready = jQuery.Event("YTPReady");
+					jQuery(YTPlayer).trigger(YTPready);
 
 					YTPlayer.player.pauseVideo();
 
@@ -1244,24 +1447,44 @@ function onYouTubeIframeAPIReady() {
 					if (YTPlayer.opt.autoPlay) {
 						$YTPlayer.YTPPlay();
 						$YTPlayer.css("background-image", "none");
-
 						jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 1}, 1000);
 						YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 1000);
-					} else {
 
+					} else {
 						YTPlayer.player.pauseVideo();
+
+						if(!YTPlayer.isPlayer){
+							jQuery(YTPlayer.playerEl).CSSAnimate({opacity: 1}, 1000);
+							YTPlayer.wrapper.CSSAnimate({opacity: YTPlayer.isAlone ? 1 : YTPlayer.opt.opacity}, 1000);
+						}
 					}
 
+					if(YTPlayer.isPlayer && !YTPlayer.opt.autoPlay){
+						YTPlayer.loading.html("Ready");
+						setTimeout(function(){
+							YTPlayer.loading.fadeOut();
+						},100)
+					}
+
+					if(YTPlayer.controlBar)
+						YTPlayer.controlBar.slideDown(1000);
+
 				} else {
-					YTPlayer.player.playVideo();
-					YTPlayer.player.seekTo(startAt, true);
+
+					//YTPlayer.player.playVideo();
+					if(startAt>=0)
+						YTPlayer.player.seekTo(startAt, true);
 				}
-				var YTPready = jQuery.Event("YTPReady");
-				jQuery(YTPlayer).trigger(YTPready);
+
 			}, 1000);
 
 		},
 
+		/**
+		 *
+		 * @param s
+		 * @returns {string}
+		 */
 		formatTime: function (s) {
 			var min = Math.floor(s / 60);
 			var sec = Math.floor(s - (60 * min));
@@ -1269,6 +1492,10 @@ function onYouTubeIframeAPIReady() {
 		}
 	};
 
+	/**
+	 *
+	 * @returns {boolean}
+	 */
 	jQuery.fn.toggleVolume = function () {
 		var YTPlayer = this.get(0);
 		if (!YTPlayer)
@@ -1282,6 +1509,9 @@ function onYouTubeIframeAPIReady() {
 		}
 	};
 
+	/**
+	 *
+	 */
 	jQuery.fn.optimizeDisplay = function () {
 		var YTPlayer = this.get(0);
 		var data = YTPlayer.opt;
@@ -1293,7 +1523,9 @@ function onYouTubeIframeAPIReady() {
 		var margin = 24;
 		var overprint = 100;
 		var vid = {};
+
 		if (data.optimizeDisplay) {
+
 			vid.width = win.width + ((win.width * margin) / 100);
 			vid.height = data.ratio == "16/9" ? Math.ceil((9 * win.width) / 16) : Math.ceil((3 * win.width) / 4);
 			vid.marginTop = -((vid.height - win.height) / 2);
@@ -1308,15 +1540,23 @@ function onYouTubeIframeAPIReady() {
 			vid.height += overprint;
 			vid.marginTop -= overprint / 2;
 			vid.marginLeft -= overprint / 2;
+
 		} else {
+
 			vid.width = "100%";
 			vid.height = "100%";
 			vid.marginTop = 0;
-			vid.marginLeft -= 0;
+			vid.marginLeft = 0;
+
 		}
 		playerBox.css({width: vid.width, height: vid.height, marginTop: vid.marginTop, marginLeft: vid.marginLeft});
 	};
 
+	/**
+	 *
+	 * @param arr
+	 * @returns {Array|string|Blob|*}
+	 */
 	jQuery.shuffle = function (arr) {
 		var newArray = arr.slice();
 		var len = newArray.length;
@@ -1330,7 +1570,7 @@ function onYouTubeIframeAPIReady() {
 		return newArray;
 	};
 
-	/*Exposed method for external use*/
+	/* Exposed public method */
 	jQuery.fn.YTPlayer = jQuery.mbYTPlayer.buildPlayer;
 	jQuery.fn.YTPlaylist = jQuery.mbYTPlayer.playlist;
 	jQuery.fn.YTPPlayNext = jQuery.mbYTPlayer.playNext;
@@ -1352,11 +1592,12 @@ function onYouTubeIframeAPIReady() {
 	jQuery.fn.YTPSetVolume = jQuery.mbYTPlayer.setVolume;
 	jQuery.fn.YTPSetVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
 	jQuery.fn.YTPManageProgress = jQuery.mbYTPlayer.manageProgress;
-	jQuery.fn.YTPGetDataFromFeed = jQuery.mbYTPlayer.getVideoData;
+	jQuery.fn.YTPGetVideoData = jQuery.mbYTPlayer.getVideoData;
 
 	jQuery.fn.YTPApplyFilter = jQuery.mbYTPlayer.applyFilter;
 	jQuery.fn.YTPApplyFilters = jQuery.mbYTPlayer.applyFilters;
-	jQuery.fn.YTPtoggleFilter = jQuery.mbYTPlayer.toggleFilter;
+	jQuery.fn.YTPToggleFilter = jQuery.mbYTPlayer.toggleFilter;
+	jQuery.fn.YTPToggleFilters = jQuery.mbYTPlayer.toggleFilters;
 	jQuery.fn.YTPRemoveFilter = jQuery.mbYTPlayer.removeFilter;
 	jQuery.fn.YTPDisableFilters = jQuery.mbYTPlayer.disableFilters;
 	jQuery.fn.YTPEnableFilters = jQuery.mbYTPlayer.enableFilters;
@@ -1382,5 +1623,93 @@ function onYouTubeIframeAPIReady() {
 	jQuery.fn.setYTPVolume = jQuery.mbYTPlayer.setVolume;
 	jQuery.fn.setVideoQuality = jQuery.mbYTPlayer.setVideoQuality;
 	jQuery.fn.manageYTPProgress = jQuery.mbYTPlayer.manageProgress;
+	jQuery.fn.YTPGetDataFromFeed = jQuery.mbYTPlayer.getVideoData;
 
 })(jQuery, ytp);
+;
+/*
+ * ******************************************************************************
+ *  jquery.mb.components
+ *  file: jquery.mb.CSSAnimate.min.js
+ *
+ *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
+ *  Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: 	http://pupunzi.com
+ *  blog:	http://pupunzi.open-lab.com
+ * 	http://open-lab.com
+ *
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 26/03/14 21.40
+ *  *****************************************************************************
+ */
+
+!function($){function uncamel(a){return a.replace(/([A-Z])/g,function(a){return"-"+a.toLowerCase()})}function setUnit(a,b){return"string"!=typeof a||a.match(/^[\-0-9\.]+$/)?""+a+b:a}function setFilter(a,b,c){var d=uncamel(b),e=jQuery.browser.mozilla?"":$.CSS.sfx;a[e+"filter"]=a[e+"filter"]||"",c=setUnit(c>$.CSS.filters[b].max?$.CSS.filters[b].max:c,$.CSS.filters[b].unit),a[e+"filter"]+=d+"("+c+") ",delete a[b]}eval(function(a,b,c,d,e,f){if(e=function(a){return a},!"".replace(/^/,String)){for(;c--;)f[c]=d[c]||c;d=[function(a){return f[a]}],e=function(){return"\\w+"},c=1}for(;c--;)d[c]&&(a=a.replace(new RegExp("\\b"+e(c)+"\\b","g"),d[c]));return a}('29 11=17.53;24(!2.9){2.9={};2.9.34=!1;2.9.22=!1;2.9.45=!1;2.9.42=!1;2.9.40=!1;2.9.28=!1;2.9.56=11;2.9.16=17.51;2.9.13=""+47(17.23);2.9.18=26(17.23,10);29 32,12,20;24(-1!=(12=11.15("33")))2.9.45=!0,2.9.16="33",2.9.13=11.14(12+6),-1!=(12=11.15("25"))&&(2.9.13=11.14(12+8));27 24(-1!=(12=11.15("58")))2.9.28=!0,2.9.16="36 38 39",2.9.13=11.14(12+5);27 24(-1!=11.15("57")){2.9.28=!0;2.9.16="36 38 39";29 30=11.15("59:")+3,43=30+4;2.9.13=11.14(30,43)}27-1!=(12=11.15("41"))?(2.9.22=!0,2.9.40=!0,2.9.16="41",2.9.13=11.14(12+7)):-1!=(12=11.15("31"))?(2.9.22=!0,2.9.42=!0,2.9.16="31",2.9.13=11.14(12+7),-1!=(12=11.15("25"))&&(2.9.13=11.14(12+8))):-1!=(12=11.15("68"))?(2.9.22=!0,2.9.16="31",2.9.13=11.14(12+7),-1!=(12=11.15("25"))&&(2.9.13=11.14(12+8))):-1!=(12=11.15("35"))?(2.9.34=!0,2.9.16="35",2.9.13=11.14(12+8)):(32=11.37(" ")+1)<(12=11.37("/"))&&(2.9.16=11.14(32,12),2.9.13=11.14(12+1),2.9.16.63()==2.9.16.64()&&(2.9.16=17.51));-1!=(20=2.9.13.15(";"))&&(2.9.13=2.9.13.14(0,20));-1!=(20=2.9.13.15(" "))&&(2.9.13=2.9.13.14(0,20));2.9.18=26(""+2.9.13,10);67(2.9.18)&&(2.9.13=""+47(17.23),2.9.18=26(17.23,10));2.9.69=2.9.18}2.9.46=/65/19.21(11);2.9.49=/66/19.21(11);2.9.48=/60|61|55/19.21(11);2.9.50=/33 52/19.21(11);2.9.44=/54/19.21(11);2.9.62=2.9.46||2.9.49||2.9.48||2.9.44||2.9.50;',10,70,"||jQuery|||||||browser||nAgt|verOffset|fullVersion|substring|indexOf|name|navigator|majorVersion|i|ix|test|webkit|appVersion|if|Version|parseInt|else|msie|var|start|Safari|nameOffset|Opera|mozilla|Firefox|Microsoft|lastIndexOf|Internet|Explorer|chrome|Chrome|safari|end|windowsMobile|opera|android|parseFloat|ios|blackberry|operaMobile|appName|Mini|userAgent|IEMobile|iPod|ua|Trident|MSIE|rv|iPhone|iPad|mobile|toLowerCase|toUpperCase|Android|BlackBerry|isNaN|AppleWebkit|version".split("|"),0,{})),jQuery.support.CSStransition=function(){var a=document.body||document.documentElement,b=a.style;return void 0!==b.transition||void 0!==b.WebkitTransition||void 0!==b.MozTransition||void 0!==b.MsTransition||void 0!==b.OTransition}(),$.CSS={name:"mb.CSSAnimate",author:"Matteo Bicocchi",version:"2.0.0",transitionEnd:"transitionEnd",sfx:"",filters:{blur:{min:0,max:100,unit:"px"},brightness:{min:0,max:400,unit:"%"},contrast:{min:0,max:400,unit:"%"},grayscale:{min:0,max:100,unit:"%"},hueRotate:{min:0,max:360,unit:"deg"},invert:{min:0,max:100,unit:"%"},saturate:{min:0,max:400,unit:"%"},sepia:{min:0,max:100,unit:"%"}},normalizeCss:function(a){var b=jQuery.extend(!0,{},a);jQuery.browser.webkit||jQuery.browser.opera?$.CSS.sfx="-webkit-":jQuery.browser.mozilla?$.CSS.sfx="-moz-":jQuery.browser.msie&&($.CSS.sfx="-ms-");for(var c in b){"transform"===c&&(b[$.CSS.sfx+"transform"]=b[c],delete b[c]),"transform-origin"===c&&(b[$.CSS.sfx+"transform-origin"]=a[c],delete b[c]),"filter"!==c||jQuery.browser.mozilla||(b[$.CSS.sfx+"filter"]=a[c],delete b[c]),"blur"===c&&setFilter(b,"blur",a[c]),"brightness"===c&&setFilter(b,"brightness",a[c]),"contrast"===c&&setFilter(b,"contrast",a[c]),"grayscale"===c&&setFilter(b,"grayscale",a[c]),"hueRotate"===c&&setFilter(b,"hueRotate",a[c]),"invert"===c&&setFilter(b,"invert",a[c]),"saturate"===c&&setFilter(b,"saturate",a[c]),"sepia"===c&&setFilter(b,"sepia",a[c]);var d="";"x"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" translateX("+setUnit(a[c],"px")+")",delete b[c]),"y"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" translateY("+setUnit(a[c],"px")+")",delete b[c]),"z"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" translateZ("+setUnit(a[c],"px")+")",delete b[c]),"rotate"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" rotate("+setUnit(a[c],"deg")+")",delete b[c]),"rotateX"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" rotateX("+setUnit(a[c],"deg")+")",delete b[c]),"rotateY"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" rotateY("+setUnit(a[c],"deg")+")",delete b[c]),"rotateZ"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" rotateZ("+setUnit(a[c],"deg")+")",delete b[c]),"scale"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" scale("+setUnit(a[c],"")+")",delete b[c]),"scaleX"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" scaleX("+setUnit(a[c],"")+")",delete b[c]),"scaleY"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" scaleY("+setUnit(a[c],"")+")",delete b[c]),"scaleZ"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" scaleZ("+setUnit(a[c],"")+")",delete b[c]),"skew"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" skew("+setUnit(a[c],"deg")+")",delete b[c]),"skewX"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" skewX("+setUnit(a[c],"deg")+")",delete b[c]),"skewY"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" skewY("+setUnit(a[c],"deg")+")",delete b[c]),"perspective"===c&&(d=$.CSS.sfx+"transform",b[d]=b[d]||"",b[d]+=" perspective("+setUnit(a[c],"px")+")",delete b[c])}return b},getProp:function(a){var b=[];for(var c in a)b.indexOf(c)<0&&b.push(uncamel(c));return b.join(",")},animate:function(a,b,c,d,e){return this.each(function(){function o(){f.called=!0,f.CSSAIsRunning=!1,g.off($.CSS.transitionEnd+"."+f.id),clearTimeout(f.timeout),g.css($.CSS.sfx+"transition",""),"function"==typeof e&&e.apply(f),"function"==typeof f.CSSqueue&&(f.CSSqueue(),f.CSSqueue=null)}var f=this,g=jQuery(this);f.id=f.id||"CSSA_"+(new Date).getTime();var h=h||{type:"noEvent"};if(f.CSSAIsRunning&&f.eventType==h.type&&!jQuery.browser.msie&&jQuery.browser.version<=9)return f.CSSqueue=function(){g.CSSAnimate(a,b,c,d,e)},void 0;if(f.CSSqueue=null,f.eventType=h.type,0!==g.length&&a){if(a=$.normalizeCss(a),f.CSSAIsRunning=!0,"function"==typeof b&&(e=b,b=jQuery.fx.speeds._default),"function"==typeof c&&(d=c,c=0),"string"==typeof c&&(e=c,c=0),"function"==typeof d&&(e=d,d="cubic-bezier(0.65,0.03,0.36,0.72)"),"string"==typeof b)for(var i in jQuery.fx.speeds){if(b==i){b=jQuery.fx.speeds[i];break}b=jQuery.fx.speeds._default}if(b||(b=jQuery.fx.speeds._default),"string"==typeof e&&(d=e,e=null),!jQuery.support.CSStransition){for(var j in a){if("transform"===j&&delete a[j],"filter"===j&&delete a[j],"transform-origin"===j&&delete a[j],"auto"===a[j]&&delete a[j],"x"===j){var k=a[j],l="left";a[l]=k,delete a[j]}if("y"===j){var k=a[j],l="top";a[l]=k,delete a[j]}("-ms-transform"===j||"-ms-filter"===j)&&delete a[j]}return g.delay(c).animate(a,b,e),void 0}var m={"default":"ease","in":"ease-in",out:"ease-out","in-out":"ease-in-out",snap:"cubic-bezier(0,1,.5,1)",easeOutCubic:"cubic-bezier(.215,.61,.355,1)",easeInOutCubic:"cubic-bezier(.645,.045,.355,1)",easeInCirc:"cubic-bezier(.6,.04,.98,.335)",easeOutCirc:"cubic-bezier(.075,.82,.165,1)",easeInOutCirc:"cubic-bezier(.785,.135,.15,.86)",easeInExpo:"cubic-bezier(.95,.05,.795,.035)",easeOutExpo:"cubic-bezier(.19,1,.22,1)",easeInOutExpo:"cubic-bezier(1,0,0,1)",easeInQuad:"cubic-bezier(.55,.085,.68,.53)",easeOutQuad:"cubic-bezier(.25,.46,.45,.94)",easeInOutQuad:"cubic-bezier(.455,.03,.515,.955)",easeInQuart:"cubic-bezier(.895,.03,.685,.22)",easeOutQuart:"cubic-bezier(.165,.84,.44,1)",easeInOutQuart:"cubic-bezier(.77,0,.175,1)",easeInQuint:"cubic-bezier(.755,.05,.855,.06)",easeOutQuint:"cubic-bezier(.23,1,.32,1)",easeInOutQuint:"cubic-bezier(.86,0,.07,1)",easeInSine:"cubic-bezier(.47,0,.745,.715)",easeOutSine:"cubic-bezier(.39,.575,.565,1)",easeInOutSine:"cubic-bezier(.445,.05,.55,.95)",easeInBack:"cubic-bezier(.6,-.28,.735,.045)",easeOutBack:"cubic-bezier(.175, .885,.32,1.275)",easeInOutBack:"cubic-bezier(.68,-.55,.265,1.55)"};m[d]&&(d=m[d]),g.off($.CSS.transitionEnd+"."+f.id);var n=$.CSS.getProp(a),p={};$.extend(p,a),p[$.CSS.sfx+"transition-property"]=n,p[$.CSS.sfx+"transition-duration"]=b+"ms",p[$.CSS.sfx+"transition-delay"]=c+"ms",p[$.CSS.sfx+"transition-timing-function"]=d,setTimeout(function(){g.one($.CSS.transitionEnd+"."+f.id,o),g.css(p)},1),f.timeout=setTimeout(function(){return f.called||!e?(f.called=!1,f.CSSAIsRunning=!1,void 0):(g.css($.CSS.sfx+"transition",""),e.apply(f),f.CSSAIsRunning=!1,"function"==typeof f.CSSqueue&&(f.CSSqueue(),f.CSSqueue=null),void 0)},b+c+10)}})}},$.fn.CSSAnimate=$.CSS.animate,$.normalizeCss=$.CSS.normalizeCss,$.fn.css3=function(a){return this.each(function(){var b=$(this),c=$.normalizeCss(a);b.css(c)})}}(jQuery);
+;/*
+ * ******************************************************************************
+ *  jquery.mb.components
+ *  file: jquery.mb.browser.min.js
+ *
+ *  Copyright (c) 2001-2014. Matteo Bicocchi (Pupunzi);
+ *  Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: 	http://pupunzi.com
+ *  blog:	http://pupunzi.open-lab.com
+ * 	http://open-lab.com
+ *
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *
+ *  last modified: 26/03/14 21.43
+ *  *****************************************************************************
+ */
+
+var nAgt=navigator.userAgent; if(!jQuery.browser){jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.msie=!1;jQuery.browser.ua=nAgt;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion= nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie= !0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7), -1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+ 8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0, ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt); jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;
+;/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: jquery.mb.simpleSlider.min.js                                                                                                              _
+ _ last modified: 16/05/15 23.45                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
+
+!function(a){/iphone|ipod|ipad|android|ie|blackberry|fennec/.test(navigator.userAgent.toLowerCase());var c="ontouchstart"in window||window.navigator&&window.navigator.msPointerEnabled&&window.MSGesture||window.DocumentTouch&&document instanceof DocumentTouch||!1;a.simpleSlider={defaults:{initialval:0,scale:100,orientation:"h",readonly:!1,callback:!1},events:{start:c?"touchstart":"mousedown",end:c?"touchend":"mouseup",move:c?"touchmove":"mousemove"},init:function(b){return this.each(function(){var d=this,e=a(d);e.addClass("simpleSlider"),d.opt={},a.extend(d.opt,a.simpleSlider.defaults,b),a.extend(d.opt,e.data());var f="h"==d.opt.orientation?"horizontal":"vertical",g=a("<div/>").addClass("level").addClass(f);e.prepend(g),d.level=g,e.css({cursor:"default"}),"auto"==d.opt.scale&&(d.opt.scale=a(d).outerWidth()),e.updateSliderVal(),d.opt.readonly||(e.on(a.simpleSlider.events.start,function(a){c&&(a=a.changedTouches[0]),d.canSlide=!0,e.updateSliderVal(a),e.css({cursor:"col-resize"}),a.preventDefault(),a.stopPropagation()}),a(document).on(a.simpleSlider.events.move,function(b){c&&(b=b.changedTouches[0]),d.canSlide&&(a(document).css({cursor:"default"}),e.updateSliderVal(b),b.preventDefault(),b.stopPropagation())}).on(a.simpleSlider.events.end,function(){a(document).css({cursor:"auto"}),d.canSlide=!1,e.css({cursor:"auto"})}))})},updateSliderVal:function(b){function g(a,b){return Math.floor(100*a/b)}var c=this,d=c.get(0);d.opt.initialval="number"==typeof d.opt.initialval?d.opt.initialval:d.opt.initialval(d);var e=a(d).outerWidth(),f=a(d).outerHeight();d.x="object"==typeof b?b.clientX+document.body.scrollLeft-c.offset().left:"number"==typeof b?b*e/d.opt.scale:d.opt.initialval*e/d.opt.scale,d.y="object"==typeof b?b.clientY+document.body.scrollTop-c.offset().top:"number"==typeof b?(d.opt.scale-d.opt.initialval-b)*f/d.opt.scale:d.opt.initialval*f/d.opt.scale,d.y=c.outerHeight()-d.y,d.scaleX=d.x*d.opt.scale/e,d.scaleY=d.y*d.opt.scale/f,d.outOfRangeX=d.scaleX>d.opt.scale?d.scaleX-d.opt.scale:d.scaleX<0?d.scaleX:0,d.outOfRangeY=d.scaleY>d.opt.scale?d.scaleY-d.opt.scale:d.scaleY<0?d.scaleY:0,d.outOfRange="h"==d.opt.orientation?d.outOfRangeX:d.outOfRangeY,d.value="undefined"!=typeof b?"h"==d.opt.orientation?d.x>=c.outerWidth()?d.opt.scale:d.x<=0?0:d.scaleX:d.y>=c.outerHeight()?d.opt.scale:d.y<=0?0:d.scaleY:"h"==d.opt.orientation?d.scaleX:d.scaleY,"h"==d.opt.orientation?d.level.width(g(d.x,e)+"%"):d.level.height(g(d.y,f)),"function"==typeof d.opt.callback&&d.opt.callback(d)}},a.fn.simpleSlider=a.simpleSlider.init,a.fn.updateSliderVal=a.simpleSlider.updateSliderVal}(jQuery);
+;/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: jquery.mb.storage.min.js                                                                                                                   _
+ _ last modified: 24/05/15 16.08                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2015. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
+
+!function(a){a.mbCookie={set:function(a,b,c,d){b=JSON.stringify(b),c||(c=7),d=d?"; domain="+d:"";var f,e=new Date;e.setTime(e.getTime()+1e3*60*60*24*c),f="; expires="+e.toGMTString(),document.cookie=a+"="+b+f+"; path=/"+d},get:function(a){for(var b=a+"=",c=document.cookie.split(";"),d=0;d<c.length;d++){for(var e=c[d];" "==e.charAt(0);)e=e.substring(1,e.length);if(0==e.indexOf(b))return JSON.parse(e.substring(b.length,e.length))}return null},remove:function(b){a.mbCookie.set(b,"",-1)}},a.mbStorage={set:function(a,b){b=JSON.stringify(b),localStorage.setItem(a,b)},get:function(a){return localStorage[a]?JSON.parse(localStorage[a]):null},remove:function(a){a?localStorage.removeItem(a):localStorage.clear()}}}(jQuery);
